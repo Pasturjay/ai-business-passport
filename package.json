@@ -12,11 +12,14 @@
     "test:watch": "vitest",
     "test:convex": "vitest run tests/convex-privacy.test.ts",
     "test:e2e": "playwright test",
+    "eval": "tsx scripts/llm-eval.ts",
     "format": "prettier --write .",
     "prepare": "husky"
   },
   "dependencies": {
+    "@anthropic-ai/sdk": "^0.129.0",
     "@clerk/nextjs": "^6.9.0",
+    "@google/genai": "^2.24.0",
     "@sentry/nextjs": "^8.44.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
@@ -30,6 +33,7 @@
     "react-dom": "^19.0.0",
     "svix": "^2.5.0",
     "tailwind-merge": "^2.6.0",
+    "tsx": "^4.23.15",
     "zod": "^3.24.1"
   },
   "devDependencies": {
