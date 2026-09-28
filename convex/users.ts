@@ -129,3 +129,20 @@ export const deleteUserFromWebhook = mutation({
     return { success: true };
   },
 });
+
+/**
+ * Super Admin Promotion Mutation.
+ * Grants full 'admin' role to the authenticated user.
+ */
+export const makeSuperAdmin = mutation({
+  args: {},
+  handler: async (ctx) => {
+    const user = await requireUser(ctx);
+    await ctx.db.patch(user._id, {
+      role: "admin",
+      updatedAt: new Date().toISOString(),
+    });
+    return { success: true, message: `User ${user.email} is now a Super Admin.` };
+  },
+});
+
