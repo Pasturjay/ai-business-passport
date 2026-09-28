@@ -315,6 +315,10 @@ export default defineSchema({
       v.literal("retired")
     ),
     confidenceIfMatched: v.number(),
+    authorId: v.optional(v.string()),
+    changeNote: v.optional(v.string()),
+    sourceUrlStatus: v.optional(v.union(v.literal("ok"), v.literal("failed"), v.literal("pending"))),
+    lastCheckedAt: v.optional(v.string()),
     createdAt: v.string(),
     updatedAt: v.string(),
     schemaVersion: v.number(),
@@ -362,7 +366,7 @@ export default defineSchema({
   // 11. Compliance Audit Log
   complianceAuditLog: defineTable({
     businessId: v.id("businesses"),
-    itemId: v.id("complianceItems"),
+    itemId: v.optional(v.id("complianceItems")),
     action: v.string(),
     actor: v.object({
       type: v.string(),
@@ -425,10 +429,11 @@ export default defineSchema({
     email: v.optional(v.string()),
     phone: v.optional(v.string()),
     source: v.union(v.literal("passport_scan"), v.literal("request"), v.literal("manual")),
+    tags: v.optional(v.array(v.string())),
     notes: v.optional(v.string()),
     lastContactedAt: v.optional(v.string()),
     followUpAt: v.optional(v.string()),
-    status: v.string(),
+    status: v.string(), // "active" | "blocked" | "archived"
     createdAt: v.string(),
     updatedAt: v.string(),
   }).index("by_business", ["businessId"]),
@@ -440,6 +445,9 @@ export default defineSchema({
     requesterName: v.string(),
     requesterCompany: v.string(),
     requesterEmail: v.string(),
+    requesterPhone: v.optional(v.string()),
+    isVerifiedEmail: v.optional(v.boolean()),
+    verificationToken: v.optional(v.string()),
     requestedItems: v.array(
       v.union(
         v.literal("company_profile"),
@@ -465,7 +473,8 @@ export default defineSchema({
     updatedAt: v.string(),
   })
     .index("by_passport_id", ["passportId"])
-    .index("by_business", ["businessId"]),
+    .index("by_business", ["businessId"])
+    .index("by_token", ["verificationToken"]),
 
   // 16. Shared Packages (Bundled documents provided to requester)
   sharedPackages: defineTable({
@@ -478,10 +487,11 @@ export default defineSchema({
         generatedDocId: v.optional(v.id("generatedDocs")),
       })
     ),
-    gaps: v.array(v.string()), // Requested items that were missing
+    gaps: v.array(v.string()), // Requested items that were missing or expired
     accessTokenHash: v.string(),
     expiresAt: v.string(),
     downloadCount: v.number(),
+    maxDownloads: v.optional(v.number()),
     createdAt: v.string(),
   })
     .index("by_business", ["businessId"])
@@ -556,6 +566,17 @@ export default defineSchema({
     .index("by_key", ["key"])
     .index("by_key_version", ["key", "version"]),
 
+  // 18b. Generated Document Versions (History & Regeneration Trail)
+  generatedDocVersions: defineTable({
+    docId: v.id("generatedDocs"),
+    version: v.number(),
+    sectionKey: v.string(),
+    previousContent: v.string(),
+    newContent: v.string(),
+    actor: v.union(v.literal("user"), v.literal("ai")),
+    createdAt: v.string(),
+  }).index("by_doc", ["docId"]),
+
   // 19. Tenders (Tender Parsing, Scoring & Readiness)
   tenders: defineTable({
     businessId: v.id("businesses"),
@@ -595,6 +616,7 @@ export default defineSchema({
       mandatoryMissing: v.number(),
     }),
     unparsedSections: v.array(v.string()),
+    acceptedRiskReqIds: v.optional(v.array(v.string())),
     responseGeneratedDocId: v.optional(v.id("generatedDocs")),
     createdAt: v.string(),
     updatedAt: v.string(),
@@ -632,6 +654,8 @@ export default defineSchema({
         lastReviewedAt: v.string(),
       })
     ),
+    feedbackRating: v.optional(v.union(v.literal("thumbs_up"), v.literal("thumbs_down"))),
+    promptVersion: v.optional(v.string()),
     createdAt: v.string(),
   }).index("by_thread", ["threadId"]),
 
@@ -716,11 +740,15 @@ export default defineSchema({
     businessId: v.id("businesses"),
     partnerId: v.id("printPartners"),
     designDocId: v.id("generatedDocs"),
+    itemType: v.optional(v.string()), // "business_card", "letterhead", "stickers"
     quantity: v.number(),
     amountKobo: v.number(),
     platformMarginPct: v.number(),
-    status: v.string(),
+    marginKobo: v.optional(v.number()),
+    status: v.string(), // "received", "printing", "shipped", "delivered"
     trackingNote: v.optional(v.string()),
+    rating: v.optional(v.number()), // 1 - 5 stars
+    reviewComment: v.optional(v.string()),
     createdAt: v.string(),
     updatedAt: v.string(),
   })
@@ -748,7 +776,7 @@ export default defineSchema({
     businessId: v.id("businesses"),
     providerId: v.id("serviceProviders"),
     context: v.string(),
-    status: v.string(),
+    status: v.string(), // "new", "contacted", "converted", "closed"
     leadFeeKobo: v.optional(v.number()),
     createdAt: v.string(),
     updatedAt: v.string(),
@@ -760,10 +788,12 @@ export default defineSchema({
   doneForMeJobs: defineTable({
     businessId: v.id("businesses"),
     service: v.string(),
-    status: v.string(),
+    status: v.string(), // "requested", "quoted", "accepted", "paid", "in_progress", "completed"
     assignedTo: v.optional(v.string()),
     notes: v.array(v.string()),
     quoteKobo: v.optional(v.number()),
+    paidAt: v.optional(v.string()),
+    deliverableDocumentId: v.optional(v.id("documents")),
     createdAt: v.string(),
     updatedAt: v.string(),
   }).index("by_business", ["businessId"]),
@@ -810,4 +840,34 @@ export default defineSchema({
   })
     .index("by_business", ["businessId"])
     .index("by_business_period", ["businessId", "period"]),
+
+  // 33. Expected Documents per Business Type
+  expectedDocuments: defineTable({
+    businessType: v.union(
+      v.literal("business_name"),
+      v.literal("limited_company"),
+      v.literal("incorporated_trustees"),
+      v.literal("unregistered")
+    ),
+    docType: v.string(),
+    label: v.string(),
+    category: v.string(),
+    mandatory: v.boolean(),
+    description: v.optional(v.string()),
+    createdAt: v.string(),
+    updatedAt: v.string(),
+  }).index("by_business_type", ["businessType"]),
+
+  // 34. Immutable Admin Audit Log
+  adminAuditLogs: defineTable({
+    adminUserId: v.string(),
+    adminRole: v.string(),
+    action: v.string(),
+    targetId: v.optional(v.string()),
+    targetType: v.string(),
+    details: v.string(), // JSON string
+    createdAt: v.string(),
+  })
+    .index("by_admin", ["adminUserId"])
+    .index("by_action", ["action"]),
 });

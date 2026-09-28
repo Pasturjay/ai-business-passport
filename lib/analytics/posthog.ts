@@ -69,3 +69,5 @@ export function track(event: string, properties: TrackPayload): void {
     }
   }
 }
+
+export const trackPostHogEvent = track;

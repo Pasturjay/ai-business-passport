@@ -25,6 +25,21 @@ export async function requireUser(ctx: QueryCtx | MutationCtx): Promise<Doc<"use
 }
 
 /**
+ * Enforces Admin / Content Editor Role access for Admin endpoints.
+ * NON-NEGOTIABLE REQUIREMENT: Non-admins get 403 / error from every admin Convex function.
+ */
+export async function requireAdminUser(
+  ctx: QueryCtx | MutationCtx,
+  allowedRoles: Role[] = ["admin", "content_editor"]
+): Promise<Doc<"users">> {
+  const user = await requireUser(ctx);
+  if (!allowedRoles.includes(user.role)) {
+    throw new Error(`403 Unauthorized: User role "${user.role}" does not have admin permissions`);
+  }
+  return user;
+}
+
+/**
  * Enforces Role-Based Access Control (RBAC) & Advisor Category Grants.
  * Story C4: Advisor read access strictly checked against active, non-expired category grants.
  */

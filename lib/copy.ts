@@ -42,3 +42,5 @@ export const PRODUCT_COPY = {
   viewPassport: "View Business Passport",
   downloadDocument: "Download document",
 } as const;
+
+export const DISCLAIMER_LEGAL = "This document was generated using AI Business Passport. It is provided for informational and draft purposes only. Legal and statutory documents should be reviewed by a qualified legal practitioner before execution.";

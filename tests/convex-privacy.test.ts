@@ -175,6 +175,25 @@ describe("Convex Privacy by Design & Compliance Rules", () => {
   it("enforces confirmBeforeFiling=true in mutation when confidence is low (< 0.85)", async () => {
     const t = convexTest(schema, modules);
 
+    await t.run(async (ctx) => {
+      await ctx.db.insert("users", {
+        clerkId: "user_owner_1",
+        email: "owner@ibadantech.ng",
+        name: "Owner User",
+        role: "owner",
+        locale: "en-NG",
+        notificationPrefs: {
+          email: true,
+          sms: true,
+          whatsapp: true,
+          inApp: true,
+        },
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
+        schemaVersion: 1,
+      });
+    });
+
     const businessId = await t.run(async (ctx) => {
       return await ctx.db.insert(
         "businesses",
@@ -204,9 +223,11 @@ describe("Convex Privacy by Design & Compliance Rules", () => {
       );
     });
 
+    const asOwner = t.withIdentity({ subject: "user_owner_1" });
+
     // Non-Negotiable Principle #2:
     // Low confidence output (0.72) must force confirmBeforeFiling = true
-    const complianceItemId = await t.mutation(api.passports.createComplianceItem, {
+    const complianceItemId = await asOwner.mutation(api.passports.createComplianceItem, {
       businessId,
       title: "CAC Annual Return Filing",
       category: "CAC",
