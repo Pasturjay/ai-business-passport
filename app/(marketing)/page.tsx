@@ -44,7 +44,7 @@ export default function MarketingHomePage() {
           <nav className="hidden md:flex items-center gap-8 text-sm font-medium text-slate-300">
             <a href="#pillars" className="hover:text-white transition-colors">Pillars</a>
             <a href="#pricing" className="hover:text-white transition-colors">Pricing</a>
-            <a href="#personas" className="hover:text-white transition-colors">Who It's For</a>
+            <a href="#personas" className="hover:text-white transition-colors">Who It&apos;s For</a>
             <a href="#faq" className="hover:text-white transition-colors">FAQ</a>
             <Link href="/trust" className="hover:text-sky-400 transition-colors">Trust & Compliance</Link>
           </nav>
@@ -66,7 +66,7 @@ export default function MarketingHomePage() {
         <div className="max-w-5xl mx-auto text-center space-y-8 relative z-10">
           <div className="inline-flex items-center gap-2 px-4 py-2 bg-sky-950/80 border border-sky-800/60 rounded-full text-xs font-semibold text-sky-400">
             <span className="w-2 h-2 rounded-full bg-sky-400 animate-pulse"></span>
-            Nigeria's First AI Business Operating System
+            Nigeria&apos;s First AI Business Operating System
           </div>
 
           <h1 className="text-4xl md:text-6xl font-black tracking-tight text-white leading-[1.15]">
@@ -294,7 +294,7 @@ export default function MarketingHomePage() {
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
           <div>
             <p className="font-semibold text-slate-200">AI Business Passport © 2026</p>
-            <p className="mt-1">Nigeria's AI-Powered Business Operating System.</p>
+            <p className="mt-1">Nigeria&apos;s AI-Powered Business Operating System.</p>
           </div>
           <div className="flex items-center gap-6">
             <Link href="/terms" className="hover:text-white transition-colors">Terms of Service</Link>

@@ -269,7 +269,7 @@ export default function OwnerPassportDashboardPage() {
                   </div>
 
                   {req.message && (
-                    <p className="text-xs italic text-gray-700 bg-gray-50 p-2 rounded">"{req.message}"</p>
+                    <p className="text-xs italic text-gray-700 bg-gray-50 p-2 rounded">&quot;{req.message}&quot;</p>
                   )}
 
                   <div className="text-xs text-gray-500">

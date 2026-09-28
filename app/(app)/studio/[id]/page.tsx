@@ -209,7 +209,7 @@ export default function DocumentStudioEditorPage({ params }: { params: { id: str
                   <div><strong className="text-blue-700">identity.legalName:</strong> Apex Zenith Logistics Ltd</div>
                   <div><strong className="text-blue-700">identity.rcNumber:</strong> RC-1849201</div>
                   <div><strong className="text-blue-700">identity.tin:</strong> 29481029-0001</div>
-                  <div><strong className="text-blue-700">operations.operatesStates:</strong> ["Lagos", "Rivers", "FCT Abuja"]</div>
+                  <div><strong className="text-blue-700">operations.operatesStates:</strong> [&quot;Lagos&quot;, &quot;Rivers&quot;, &quot;FCT Abuja&quot;]</div>
                 </div>
               </div>
             )}

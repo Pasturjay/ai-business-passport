@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 
 interface Requirement {
   id: string;
@@ -227,19 +228,19 @@ export default function TenderDetailsPage({ params }: { params: { id: string } }
                 {req.matchStatus !== "available" && (
                   <div className="flex items-center gap-2">
                     {req.category === "submission" ? (
-                      <a
+                      <Link
                         href="/studio/new"
                         className="rounded bg-blue-600 px-2.5 py-1 text-xs font-semibold text-white hover:bg-blue-700"
                       >
                         Generate in Studio
-                      </a>
+                      </Link>
                     ) : (
-                      <a
+                      <Link
                         href="/vault"
                         className="rounded bg-gray-900 px-2.5 py-1 text-xs font-semibold text-white hover:bg-gray-800"
                       >
                         Upload to Vault
-                      </a>
+                      </Link>
                     )}
                     {!req.mandatory && (
                       <button

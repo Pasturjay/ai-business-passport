@@ -332,7 +332,7 @@ export default function AdminDashboardPage() {
                   {/* Version Diff & Change Note */}
                   <div className="rounded-lg bg-gray-50 p-4 space-y-2 border text-xs">
                     <span className="font-bold text-gray-900 block">Version Change Note:</span>
-                    <p className="text-gray-700 italic">"{selectedRule.changeNote || "No change note recorded."}"</p>
+                    <p className="text-gray-700 italic">&quot;{selectedRule.changeNote || "No change note recorded."}&quot;</p>
                     <div className="text-[11px] text-gray-500 pt-1 flex gap-4">
                       <span>Author: <strong className="text-gray-800">{selectedRule.authorId}</strong></span>
                       <span>Reviewer: <strong className="text-gray-800">{selectedRule.reviewedBy || "Pending Review"}</strong></span>
