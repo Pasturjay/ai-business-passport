@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { use, useState } from "react";
 import { DISCLAIMER_LEGAL } from "@/lib/copy";
 
 interface Section {
@@ -17,8 +17,9 @@ interface VersionEntry {
   createdAt: string;
 }
 
-export default function DocumentStudioEditorPage({ params }: { params: { id: string } }) {
-  const docId = params.id;
+export default function DocumentStudioEditorPage({ params }: { params: Promise<{ id: string }> }) {
+  const resolvedParams = use(params);
+  const docId = resolvedParams.id;
 
   // Mock Document Studio State for Interactive Editor UI
   const [documentTitle] = useState("Corporate Company Profile");

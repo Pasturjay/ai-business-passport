@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { use, useState } from "react";
 import Link from "next/link";
 
 interface Requirement {
@@ -13,8 +13,9 @@ interface Requirement {
   sourcePageRef?: string;
 }
 
-export default function TenderDetailsPage({ params }: { params: { id: string } }) {
-  const tenderId = params.id;
+export default function TenderDetailsPage({ params }: { params: Promise<{ id: string }> }) {
+  const resolvedParams = use(params);
+  const tenderId = resolvedParams.id;
 
   // Mock Tender Assistant State
   const [tenderTitle] = useState("Supply & Installation of Heavy-Duty Solar Generators");

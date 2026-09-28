@@ -8,6 +8,7 @@ import { useState } from "react";
 
 export default function DashboardPage() {
   const user = useQuery(api.users.getCurrentUser);
+
   const makeSuperAdmin = useMutation(api.users.makeSuperAdmin);
   const [adminStatusMsg, setAdminStatusMsg] = useState<string | null>(null);
 
@@ -16,7 +17,7 @@ export default function DashboardPage() {
       const res = await makeSuperAdmin({});
       setAdminStatusMsg(res.message || "You are now a Super Admin!");
     } catch (err: any) {
-      setAdminStatusMsg(`Granted Admin Privileges (Local Mode).`);
+      setAdminStatusMsg("Granted Admin Privileges (Local Mode).");
     }
   };
 
@@ -31,7 +32,7 @@ export default function DashboardPage() {
           </p>
         </div>
 
-        <div className="flex items-center gap-3">
+        <div className="flex flex-wrap items-center gap-3">
           {user?.role === "admin" ? (
             <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-purple-100 border border-purple-300 text-purple-800 text-xs font-bold rounded-full">
               👑 Super Admin Active
@@ -65,6 +66,34 @@ export default function DashboardPage() {
           ✅ {adminStatusMsg}
         </div>
       )}
+
+      {/* PRINT-READY FEATURE BANNER (HIGH VISIBILITY) */}
+      <div className="rounded-2xl border-2 border-emerald-500 bg-gradient-to-r from-emerald-900 via-teal-900 to-slate-900 p-6 text-white shadow-xl flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+        <div className="space-y-2 max-w-2xl">
+          <div className="inline-flex items-center gap-2 px-3 py-0.5 bg-emerald-400/20 text-emerald-300 text-[11px] font-bold rounded-full border border-emerald-400/30">
+            🖨️ New &bull; Print-Ready Generators Active
+          </div>
+          <h2 className="text-xl font-black text-white">Generate Official Company Profile &amp; Printable Passport Cards</h2>
+          <p className="text-xs text-slate-300 leading-relaxed">
+            Automatically pull your registration, tax clearance certificates, directors, and past projects from your Business Brain &amp; Vault to generate print-ready PDFs and physical business cards.
+          </p>
+        </div>
+
+        <div className="flex flex-col sm:flex-row items-stretch gap-3 shrink-0">
+          <Link
+            href="/profile/print"
+            className="px-5 py-3 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-extrabold text-xs rounded-xl transition-all text-center shadow-lg shadow-emerald-500/20"
+          >
+            📄 Print Corporate Profile &rarr;
+          </Link>
+          <Link
+            href="/passport/print"
+            className="px-5 py-3 bg-white hover:bg-slate-100 text-slate-900 font-extrabold text-xs rounded-xl transition-all text-center shadow-md"
+          >
+            🎴 Print Business Cards &rarr;
+          </Link>
+        </div>
+      </div>
 
       {/* Main Grid */}
       <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -152,4 +181,3 @@ export default function DashboardPage() {
     </div>
   );
 }
-
