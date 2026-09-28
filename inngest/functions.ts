@@ -1,5 +1,6 @@
 import { inngest } from "./client";
 import { completeLLM } from "@/lib/llm";
+import { sendTransactionalEmail } from "@/lib/email/brevo";
 
 /**
  * Inngest Async Function 1: CAC OCR & Document Parsing
@@ -145,5 +146,36 @@ export const scheduledAccountPurgeJob = inngest.createFunction(
     });
 
     return purgeResult;
+  }
+);
+
+/**
+ * Inngest Async Function 5: Onboarding Abandonment Recovery (24h Delay)
+ * Sends a Brevo transactional email 24h after onboarding step with no completion.
+ */
+export const onboardingAbandonedJob = inngest.createFunction(
+  { id: "onboarding-abandoned-recovery", name: "Send Onboarding Recovery Email" },
+  { event: "onboarding/step.completed" },
+  async ({ event, step }) => {
+    const { userId, userEmail, userName, completedStep } = event.data;
+
+    // Step 1: Wait 24 hours
+    await step.sleep("wait-24-hours", "24h");
+
+    // Step 2: Dispatch recovery email via Brevo transactional helper
+    const emailResult = await step.run("send-recovery-email", async () => {
+      return await sendTransactionalEmail({
+        to: userEmail,
+        toName: userName || "Founder",
+        subject: "Pick up where you left off - AI Business Passport",
+        htmlContent: `<p>Hello ${userName || "Founder"},</p><p>You were setting up your business profile (step: ${completedStep}). Complete your setup to generate your verified Business Passport!</p>`,
+      });
+    });
+
+    return {
+      userId,
+      completedStep,
+      emailSent: emailResult.success,
+    };
   }
 );
