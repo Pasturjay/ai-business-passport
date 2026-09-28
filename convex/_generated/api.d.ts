@@ -10,6 +10,7 @@ import type * as passports from "../passports";
 import type * as users from "../users";
 import type * as advisors from "../advisors";
 import type * as brain from "../brain";
+import type * as documents from "../documents";
 
 /**
  * A utility for referencing Convex functions in your app's API.
@@ -19,6 +20,7 @@ declare const fullApi: ApiFromModules<{
   users: typeof users;
   advisors: typeof advisors;
   brain: typeof brain;
+  documents: typeof documents;
 }>;
 
 export declare const api: FilterApi<typeof fullApi, FunctionReference<any, "public">>;

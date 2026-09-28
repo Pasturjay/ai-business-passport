@@ -1,5 +1,7 @@
 import { inngest } from "./client";
-import { completeLLM } from "@/lib/llm";
+import { completeLLM, getLLMProvider } from "@/lib/llm";
+import { documentExtractionPromptV1 } from "@/lib/llm/prompts";
+import { applyConfidencePolicy } from "@/lib/llm/confidence";
 import { sendTransactionalEmail } from "@/lib/email/brevo";
 
 /**
@@ -176,6 +178,66 @@ export const onboardingAbandonedJob = inngest.createFunction(
       userId,
       completedStep,
       emailSent: emailResult.success,
+    };
+  }
+);
+
+/**
+ * Inngest Async Function 6: Document Intelligence Pipeline (Segment 6)
+ * Processes uploaded Vault documents, extracts metadata, checks consistency against Brain,
+ * applies confidence policy, and links document expiries to Compliance Center.
+ */
+export const documentIntelligenceJob = inngest.createFunction(
+  { id: "document-intelligence", name: "Vault Document Intelligence Pipeline" },
+  { event: "document/uploaded" },
+  async ({ event, step }) => {
+    const { documentId, businessId, r2Key, fileName, mimeType, brainSnapshot } = event.data;
+
+    // Step 1: Multimodal Document OCR & Schema Extraction
+    const extractionResult = await step.run("extract-vault-document-metadata", async () => {
+      const provider = getLLMProvider();
+      const res = await provider.extractFromDocument({
+        r2Key,
+        mimeType,
+        schema: documentExtractionPromptV1.schema,
+        instructions: `Extract statutory fields, category, docType, dates, RC number, TIN, and business name from document: ${fileName}`,
+      });
+      return res;
+    });
+
+    // Step 2: Apply Confidence Policy Thresholds
+    const confidence = extractionResult.data.confidence ?? 0.8;
+    const policy = applyConfidencePolicy(confidence, extractionResult.data.documentCategory);
+    
+    let reviewStatus: "auto_filed" | "needs_review" = policy.autoAccept ? "auto_filed" : "needs_review";
+
+    // Step 3: Consistency Check against Business Brain
+    const extractedName = extractionResult.data.businessName || "";
+    const extractedRc = extractionResult.data.registrationNumber || "";
+    const brainName = brainSnapshot?.legalName || "";
+    const brainRc = brainSnapshot?.rcNumber || "";
+
+    let mismatchNote: string | undefined = undefined;
+
+    if (brainName && extractedName && brainName.toLowerCase() !== extractedName.toLowerCase()) {
+      reviewStatus = "needs_review"; // NEVER auto-file on Brain mismatch
+      mismatchNote = `Name Mismatch: Uploaded document shows "${extractedName}", but your registered Business Brain shows "${brainName}". Confirm if you want to update your registered details.`;
+    } else if (brainRc && extractedRc && brainRc !== extractedRc) {
+      reviewStatus = "needs_review";
+      mismatchNote = `Registration Number Mismatch: Document shows "${extractedRc}", but Business Brain has "${brainRc}".`;
+    }
+
+    return {
+      documentId,
+      businessId,
+      category: extractionResult.data.documentCategory,
+      docType: extractionResult.data.documentType,
+      confidence,
+      reviewStatus,
+      mismatchNote,
+      issuedAt: extractionResult.data.issueDate,
+      expiresAt: extractionResult.data.expiryDate,
+      credentialBacked: extractedRc && brainRc && extractedRc === brainRc ? "Backed by your uploaded document" : null,
     };
   }
 );
