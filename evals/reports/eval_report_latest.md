@@ -1,5 +1,5 @@
 # LLM Provider Benchmark & OCR Evaluation Report
-*Generated: 2026-09-28T18:48:51.017Z*
+*Generated: 2026-09-28T21:45:39.194Z*
 
 | Metric | Claude 3.5 Adapter | Gemini 1.5/2.0 Adapter |
 | :--- | :--- | :--- |
