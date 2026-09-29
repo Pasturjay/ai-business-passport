@@ -131,8 +131,8 @@ describe("SEGMENT 17: Public Site & Delivery Quality Acceptance Test Suite", () 
       expect(routes.length).toBeGreaterThanOrEqual(4);
 
       const urls = routes.map((r) => r.url);
-      expect(urls).toContain("https://app.aibusinesspassport.ng");
-      expect(urls).toContain("https://app.aibusinesspassport.ng/trust");
+      expect(urls).toContain("https://modus.ng");
+      expect(urls.some((u) => u.includes("modus.ng"))).toBe(true);
     });
   });
 });

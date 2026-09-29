@@ -1,5 +1,5 @@
 /**
- * AI Business Passport - Plain-Language Product Copy Dictionary
+ * Modus OS - Plain-Language Product Copy Dictionary & Branding
  * 
  * Non-Negotiable Principle #5:
  * Avoid complex legal/statutory jargon. Speak in direct, plain Nigerian business language.
@@ -22,6 +22,19 @@ export const PHRASE_REPLACEMENTS: Record<BannedPhrase, string> = {
 };
 
 export const PRODUCT_COPY = {
+  // Brand Name & Domains
+  brandName: "Modus",
+  fullName: "Modus Business Operating System",
+  tagline: "Nigeria's Intelligent Business Operating System & Verifiable Passport",
+  
+  // Domain Extension Map
+  domains: {
+    app: "app.modus.ng",
+    partners: "partners.modus.ng",
+    admin: "admin.modus.ng",
+    marketing: "modus.ng",
+  },
+
   // Trust & Guidance Disclaimers
   trustNotice: "This assessment is based on the information you gave us. It is not binding legal or tax advice.",
   confirmBeforeFilingPrompt: "Please review and confirm these details before filing.",
@@ -35,12 +48,12 @@ export const PRODUCT_COPY = {
   // Business Passport Public Verification
   passportBadgeVerified: "Verified Business Identity",
   passportBadgePending: "Verification in Progress",
-  passportPublicSubtitle: "Public credential issued by AI Business Passport",
+  passportPublicSubtitle: "Public credential issued by Modus Business Operating System",
 
   // Action Buttons
-  getStarted: "Get your business started",
-  viewPassport: "View Business Passport",
+  getStarted: "Get your business started with Modus",
+  viewPassport: "View Modus Verified Passport",
   downloadDocument: "Download document",
 } as const;
 
-export const DISCLAIMER_LEGAL = "This document was generated using AI Business Passport. It is provided for informational and draft purposes only. Legal and statutory documents should be reviewed by a qualified legal practitioner before execution.";
+export const DISCLAIMER_LEGAL = "This document was generated using Modus Business Operating System. It is provided for informational and draft purposes only. Legal and statutory documents should be reviewed by a qualified legal practitioner before execution.";
