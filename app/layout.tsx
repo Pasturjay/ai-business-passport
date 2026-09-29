@@ -25,6 +25,12 @@ export const metadata: Metadata = {
   creator: "Modus Technologies Ltd",
   publisher: "Modus Business OS",
   metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL || "https://modus.ng"),
+  manifest: "/manifest.json",
+  icons: {
+    icon: "/icons/icon-192.png",
+    apple: "/icons/icon-192.png",
+    shortcut: "/favicon.ico",
+  },
   alternates: {
     canonical: "/",
   },
