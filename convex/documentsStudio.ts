@@ -1,8 +1,12 @@
 import { query, mutation } from "./_generated/server";
 import { v } from "convex/values";
 import { requireUser, requireBusinessAccess } from "./authHelpers";
-import { GeneratedDocSection } from "../lib/documentStudio/generator";
-import { evaluateDeterministicQC } from "../lib/documentStudio/qc";
+import { evaluateDeterministicQC } from "../lib/documentStudio/deterministicQC";
+export interface GeneratedDocSection {
+  key: string;
+  title: string;
+  content: string;
+}
 
 /**
  * Generate a new document draft in Document Studio after running QC pass.

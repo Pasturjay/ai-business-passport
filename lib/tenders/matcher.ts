@@ -1,4 +1,4 @@
-import { ExtractedRequirement } from "./extractor";
+import { ExtractedRequirement } from "./ruleExtractor";
 
 export interface MatchedRequirement extends ExtractedRequirement {
   matchStatus: "available" | "needs_preparation" | "missing";

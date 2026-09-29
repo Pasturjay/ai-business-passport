@@ -1,7 +1,7 @@
 import { query, mutation } from "./_generated/server";
 import { v } from "convex/values";
 import { requireBusinessAccess } from "./authHelpers";
-import { extractTenderRequirements } from "../lib/tenders/extractor";
+import { extractRequirementsDeterministic } from "../lib/tenders/ruleExtractor";
 import { matchRequirementsAgainstBusinessData } from "../lib/tenders/matcher";
 import { calculateTenderReadiness } from "../lib/tenders/readiness";
 
@@ -26,8 +26,8 @@ export const createTenderFromDocument = mutation({
       .withIndex("by_business", (q) => q.eq("businessId", args.businessId))
       .collect();
 
-    // 1. Requirement Extraction
-    const extraction = await extractTenderRequirements(args.documentText, args.fileName);
+    // 1. Requirement Extraction (Deterministic & safe for Convex mutation)
+    const extraction = extractRequirementsDeterministic(args.documentText, args.fileName);
 
     // 2. Matching against Brain & Vault
     const matchedReqs = matchRequirementsAgainstBusinessData(
