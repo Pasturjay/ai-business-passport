@@ -17,7 +17,7 @@ export interface PDFExportOptions {
 
 export function generatePDFHtml(options: PDFExportOptions): string {
   const { businessName, rcNumber, tin, passportId, documentTitle, sections, isLetterhead, contact } = options;
-  const appBaseUrl = process.env.NEXT_PUBLIC_APP_URL || "https://app.aibusinesspassport.ng";
+  const appBaseUrl = process.env.NEXT_PUBLIC_APP_URL || "https://app.modus.ng";
   const passportUrl = passportId ? `${appBaseUrl}/p/${passportId}` : `${appBaseUrl}`;
 
   const headerHtml = isLetterhead
@@ -41,7 +41,7 @@ export function generatePDFHtml(options: PDFExportOptions): string {
     `
     : `
       <div style="border-b: 1px solid #e2e8f0; padding-bottom: 12px; margin-bottom: 20px;">
-        <span style="font-size: 12px; font-weight: bold; color: #2563eb; text-transform: uppercase;">AI Business Passport &bull; Document Studio</span>
+        <span style="font-size: 12px; font-weight: bold; color: #059669; text-transform: uppercase;">Modus OS &bull; Document Studio</span>
         <h1 style="margin: 6px 0 0 0; color: #0f172a; font-size: 24px;">${documentTitle}</h1>
         <p style="margin: 4px 0 0 0; font-size: 13px; color: #64748b;">Prepared for <strong>${businessName}</strong> ${rcNumber ? "(RC: " + rcNumber + ")" : ""}</p>
       </div>

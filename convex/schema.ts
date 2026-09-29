@@ -2,7 +2,7 @@ import { defineSchema, defineTable } from "convex/server";
 import { v } from "convex/values";
 
 /**
- * AI Business Passport - Complete Convex Database Schema
+ * Modus Business Operating System - Complete Convex Database Schema
  * The single source of truth ("The Business Brain") for Nigerian businesses.
  */
 export default defineSchema({

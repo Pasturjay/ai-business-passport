@@ -240,7 +240,7 @@ describe("SEGMENT 16: Transactional and Services Revenue Test Suite", () => {
 
       const csv = exportRevenueReportCSV(report);
 
-      expect(csv).toContain("AI Business Passport - Revenue Breakdown Report");
+      expect(csv).toContain("Modus Business Operating System - Revenue Breakdown Report");
       expect(csv).toContain("Stream Name,Gross Revenue (Kobo)");
       expect(csv).toContain("Subscriptions (SaaS)");
       expect(csv).toContain("Print Marketplace");

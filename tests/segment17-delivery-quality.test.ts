@@ -40,7 +40,7 @@ describe("SEGMENT 17: Public Site & Delivery Quality Acceptance Test Suite", () 
       const content = fs.readFileSync(manifestPath, "utf-8");
       const json = JSON.parse(content);
 
-      expect(json.name).toBe("AI Business Passport");
+      expect(json.name).toBe("Modus Business Operating System");
       expect(json.display).toBe("standalone");
       expect(json.start_url).toBe("/");
     });
@@ -61,7 +61,7 @@ describe("SEGMENT 17: Public Site & Delivery Quality Acceptance Test Suite", () 
 
       const content = fs.readFileSync(offlinePath, "utf-8");
       expect(content).toContain("You are currently offline");
-      expect(content).toContain("AI Business Passport");
+      expect(content).toContain("Modus Business OS");
     });
   });
 
@@ -101,11 +101,11 @@ describe("SEGMENT 17: Public Site & Delivery Quality Acceptance Test Suite", () 
       setLocale("en-NG");
       expect(getLocale()).toBe("en-NG");
 
-      expect(t("app.title")).toBe("AI Business Passport");
+      expect(t("app.title")).toBe("Modus Business OS");
       expect(t("hero.tagline")).toContain("Tell us about your business once");
 
       // Pidgin translation
-      expect(t("hero.subheading", undefined, "pcm-NG")).toContain("Naija AI business passport");
+      expect(t("hero.subheading", undefined, "pcm-NG")).toContain("Naija business operating system");
 
       // Fallback test for missing key in Yoruba
       expect(t("pillars.compliance.title", undefined, "yo-NG")).toBe("Deterministic Compliance");

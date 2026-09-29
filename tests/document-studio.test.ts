@@ -167,7 +167,7 @@ describe("SEGMENT 13: Document Studio Acceptance Tests", () => {
       expect(pdfBuffer.length).toBeGreaterThan(100);
       const pdfString = pdfBuffer.toString("utf-8");
       expect(pdfString).toContain("Apex Zenith Logistics Ltd");
-      expect(pdfString).toContain("https://app.aibusinesspassport.ng/p/pass_apex_123");
+      expect(pdfString).toContain("https://app.modus.ng/p/pass_apex_123");
     });
 
     it("generates valid non-empty DOCX buffer", async () => {

@@ -42,7 +42,7 @@ export function validateAssistantResponse(
 
   // If statutory question asked but NO matching rules or tool results were returned
   if (mentionsStatutory && citations.length === 0 && (!toolResults || toolResults.length === 0)) {
-    const referralText = "I don't have a reviewed answer for that yet — here's who can help:\n\nWe recommend speaking with a verified legal or accounting professional on the AI Business Passport marketplace who can guide you on this specific requirement.";
+    const referralText = "I don't have a reviewed answer for that yet — here's who can help:\n\nWe recommend speaking with a verified legal or accounting professional on the Modus marketplace who can guide you on this specific requirement.";
     return {
       isValid: true,
       sanitizedResponse: referralText,

@@ -32,8 +32,8 @@ export async function sendTransactionalEmail(options: SendEmailOptions): Promise
       },
       body: JSON.stringify({
         sender: {
-          name: "AI Business Passport",
-          email: process.env.BREVO_SENDER_EMAIL || "notifications@aibusinesspassport.ng",
+          name: "Modus Business OS",
+          email: process.env.BREVO_SENDER_EMAIL || "notifications@modus.ng",
         },
         to: [{ email: options.to, name: options.toName }],
         subject: options.subject,

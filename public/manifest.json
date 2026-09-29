@@ -1,7 +1,7 @@
 {
-  "name": "AI Business Passport",
-  "short_name": "Passport",
-  "description": "Nigeria's AI-Powered Business Operating System. Deterministic compliance, verifiable identity, document intelligence, and tender readiness.",
+  "name": "Modus Business Operating System",
+  "short_name": "Modus",
+  "description": "Nigeria's Intelligent Business Operating System. Deterministic compliance, verifiable 3D identity, document intelligence, and tender readiness.",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#0f172a",

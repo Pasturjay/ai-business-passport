@@ -177,7 +177,7 @@ export function calculateRevenueReport(
 export function exportRevenueReportCSV(report: RevenueSummaryReport): string {
   const lines: string[] = [];
 
-  lines.push("AI Business Passport - Revenue Breakdown Report");
+  lines.push("Modus Business Operating System - Revenue Breakdown Report");
   lines.push(`Generated At,${report.generatedAt}`);
   lines.push(`Period,${report.period}`);
   lines.push(`Total Gross Revenue (NGN),${report.formattedTotalGrossNaira}`);

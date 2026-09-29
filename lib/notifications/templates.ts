@@ -1,5 +1,5 @@
 /**
- * Plain-language multi-channel notification templates.
+ * Plain-language multi-channel notification templates for Modus.
  * Enforces Zero Private Data in SMS / WhatsApp text bodies (no NIN, BVN, or sensitive financials).
  */
 
@@ -24,7 +24,7 @@ export function renderNotificationTemplate(
   template: NotificationTemplateKey,
   payload: Record<string, any>
 ): RenderedTemplate {
-  const appBaseUrl = process.env.NEXT_PUBLIC_APP_URL || "https://app.aibusinesspassport.ng";
+  const appBaseUrl = process.env.NEXT_PUBLIC_APP_URL || "https://app.modus.ng";
 
   switch (template) {
     case "compliance_due": {
@@ -34,13 +34,13 @@ export function renderNotificationTemplate(
       const daysText = days !== "" ? ` in ${days} day(s)` : "";
 
       const subject = `Reminder: ${title} due${daysText}`;
-      const bodyText = `AI Business Passport: Your compliance obligation "${title}" is due on ${dueDate}. Visit ${appBaseUrl}/dashboard to view details.`;
+      const bodyText = `Modus OS: Your compliance obligation "${title}" is due on ${dueDate}. Visit ${appBaseUrl}/dashboard to view details.`;
       const htmlContent = `
         <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
           <h2 style="color: #0f172a;">Compliance Filing Reminder</h2>
           <p>Your business compliance requirement <strong>${title}</strong> is due on <strong>${dueDate}</strong>.</p>
           <p style="margin-top: 20px;">
-            <a href="${appBaseUrl}/dashboard" style="background-color: #2563eb; color: #ffffff; padding: 10px 18px; text-decoration: none; border-radius: 6px; display: inline-block;">
+            <a href="${appBaseUrl}/dashboard" style="background-color: #059669; color: #ffffff; padding: 10px 18px; text-decoration: none; border-radius: 6px; display: inline-block;">
               View Compliance Calendar
             </a>
           </p>
@@ -54,7 +54,7 @@ export function renderNotificationTemplate(
       const dueDate = payload.dueDate || "recently";
 
       const subject = `URGENT: ${title} is OVERDUE`;
-      const bodyText = `AI Business Passport URGENT: "${title}" was due on ${dueDate} and is now overdue. Log in now to avoid penalties: ${appBaseUrl}/dashboard`;
+      const bodyText = `Modus OS URGENT: "${title}" was due on ${dueDate} and is now overdue. Log in now to avoid penalties: ${appBaseUrl}/dashboard`;
       const htmlContent = `
         <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
           <h2 style="color: #dc2626;">Filing Overdue Alert</h2>
@@ -75,13 +75,13 @@ export function renderNotificationTemplate(
       const expiresAt = payload.expiresAt || "soon";
 
       const subject = `Document Expiring: ${docType}`;
-      const bodyText = `AI Business Passport: Your stored document "${fileName}" expires on ${expiresAt}. Upload a updated copy: ${appBaseUrl}/vault`;
+      const bodyText = `Modus OS: Your stored document "${fileName}" expires on ${expiresAt}. Upload a updated copy: ${appBaseUrl}/vault`;
       const htmlContent = `
         <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
           <h2 style="color: #0f172a;">Document Expiry Notice</h2>
           <p>Your Vault document <strong>${fileName}</strong> (${docType}) is set to expire on <strong>${expiresAt}</strong>.</p>
           <p style="margin-top: 20px;">
-            <a href="${appBaseUrl}/vault" style="background-color: #2563eb; color: #ffffff; padding: 10px 18px; text-decoration: none; border-radius: 6px; display: inline-block;">
+            <a href="${appBaseUrl}/vault" style="background-color: #059669; color: #ffffff; padding: 10px 18px; text-decoration: none; border-radius: 6px; display: inline-block;">
               Upload Renewal to Vault
             </a>
           </p>
@@ -95,13 +95,13 @@ export function renderNotificationTemplate(
       const company = payload.requesterCompany || "a business partner";
 
       const subject = `New Document Request from ${name} (${company})`;
-      const bodyText = `AI Business Passport: ${name} from ${company} requested your business profile package. Review & approve: ${appBaseUrl}/requests`;
+      const bodyText = `Modus OS: ${name} from ${company} requested your business profile package. Review & approve: ${appBaseUrl}/requests`;
       const htmlContent = `
         <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
           <h2 style="color: #0f172a;">New Business Profile Request</h2>
-          <p><strong>${name}</strong> from <strong>${company}</strong> has submitted a request to view your verified Business Passport & document package.</p>
+          <p><strong>${name}</strong> from <strong>${company}</strong> has submitted a request to view your verified Modus Passport & document package.</p>
           <p style="margin-top: 20px;">
-            <a href="${appBaseUrl}/requests" style="background-color: #2563eb; color: #ffffff; padding: 10px 18px; text-decoration: none; border-radius: 6px; display: inline-block;">
+            <a href="${appBaseUrl}/requests" style="background-color: #059669; color: #ffffff; padding: 10px 18px; text-decoration: none; border-radius: 6px; display: inline-block;">
               Review Request
             </a>
           </p>
@@ -115,7 +115,7 @@ export function renderNotificationTemplate(
       const businessName = payload.businessName || "Business";
 
       const subject = `Profile Request ${status.toUpperCase()} by ${businessName}`;
-      const bodyText = `AI Business Passport: Your profile request to ${businessName} was ${status}. Check status: ${appBaseUrl}/p`;
+      const bodyText = `Modus OS: Your profile request to ${businessName} was ${status}. Check status: ${appBaseUrl}/p`;
       const htmlContent = `
         <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
           <h2 style="color: #0f172a;">Request Update</h2>
@@ -130,13 +130,13 @@ export function renderNotificationTemplate(
       const action = payload.action || "Please complete your pending action.";
 
       const subject = `Reminder: ${title}`;
-      const bodyText = `AI Business Passport: ${title} - ${action}. Log in: ${appBaseUrl}/dashboard`;
+      const bodyText = `Modus OS: ${title} - ${action}. Log in: ${appBaseUrl}/dashboard`;
       const htmlContent = `
         <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
           <h2 style="color: #0f172a;">${title}</h2>
           <p>${action}</p>
           <p style="margin-top: 20px;">
-            <a href="${appBaseUrl}/dashboard" style="background-color: #2563eb; color: #ffffff; padding: 10px 18px; text-decoration: none; border-radius: 6px; display: inline-block;">
+            <a href="${appBaseUrl}/dashboard" style="background-color: #059669; color: #ffffff; padding: 10px 18px; text-decoration: none; border-radius: 6px; display: inline-block;">
               Open Dashboard
             </a>
           </p>
@@ -149,7 +149,7 @@ export function renderNotificationTemplate(
       const tier = payload.tier || "subscription";
 
       const subject = `Payment Failed - Action Required`;
-      const bodyText = `AI Business Passport: Your payment for ${tier} could not be processed. Update billing to retain features: ${appBaseUrl}/settings/billing`;
+      const bodyText = `Modus OS: Your payment for ${tier} could not be processed. Update billing to retain features: ${appBaseUrl}/settings/billing`;
       const htmlContent = `
         <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
           <h2 style="color: #dc2626;">Subscription Payment Issue</h2>
@@ -168,14 +168,14 @@ export function renderNotificationTemplate(
       const name = payload.userName || "Founder";
       const legalName = payload.legalName || "your business";
 
-      const subject = `Welcome to AI Business Passport!`;
-      const bodyText = `AI Business Passport: Welcome ${name}! Your profile for ${legalName} is live. Explore your dashboard: ${appBaseUrl}/dashboard`;
+      const subject = `Welcome to Modus Business Operating System!`;
+      const bodyText = `Modus OS: Welcome ${name}! Your profile for ${legalName} is live. Explore your dashboard: ${appBaseUrl}/dashboard`;
       const htmlContent = `
         <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
           <h2 style="color: #0f172a;">Welcome, ${name}!</h2>
-          <p>Your AI Business Passport for <strong>${legalName}</strong> has been initialized.</p>
+          <p>Your Modus Business Operating System account for <strong>${legalName}</strong> has been initialized.</p>
           <p style="margin-top: 20px;">
-            <a href="${appBaseUrl}/dashboard" style="background-color: #2563eb; color: #ffffff; padding: 10px 18px; text-decoration: none; border-radius: 6px; display: inline-block;">
+            <a href="${appBaseUrl}/dashboard" style="background-color: #059669; color: #ffffff; padding: 10px 18px; text-decoration: none; border-radius: 6px; display: inline-block;">
               Get Started
             </a>
           </p>
@@ -189,13 +189,13 @@ export function renderNotificationTemplate(
       const resumeUrl = payload.resumeUrl || `${appBaseUrl}/onboarding`;
 
       const subject = `Complete your setup for ${legalName}`;
-      const bodyText = `AI Business Passport: Pick up where you left off setting up ${legalName}. Complete setup: ${resumeUrl}`;
+      const bodyText = `Modus OS: Pick up where you left off setting up ${legalName}. Complete setup: ${resumeUrl}`;
       const htmlContent = `
         <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
           <h2 style="color: #0f172a;">Resume Business Onboarding</h2>
           <p>You're almost done creating your verified business card and passport for <strong>${legalName}</strong>.</p>
           <p style="margin-top: 20px;">
-            <a href="${resumeUrl}" style="background-color: #2563eb; color: #ffffff; padding: 10px 18px; text-decoration: none; border-radius: 6px; display: inline-block;">
+            <a href="${resumeUrl}" style="background-color: #059669; color: #ffffff; padding: 10px 18px; text-decoration: none; border-radius: 6px; display: inline-block;">
               Resume Setup
             </a>
           </p>

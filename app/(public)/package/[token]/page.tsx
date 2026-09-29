@@ -155,7 +155,7 @@ export default function SharedPackagePage({ params }: PackagePageProps) {
         )}
 
         <div className="border-t pt-4 text-center text-[11px] text-gray-400">
-          Downloads Logged: {downloadedCount} times &bull; Powered by AI Business Passport Nigeria
+          Downloads Logged: {downloadedCount} times &bull; Powered by Modus Business Operating System (modus.ng)
         </div>
       </div>
     </div>

@@ -127,7 +127,7 @@ export const sendMessage = mutation({
         const item = compItems[0];
         assistantText = `Based on reviewed statutory regulations (${item.source || "CAMA 2020"}):\n\nYour requirement **${item.plainSummary || item.ruleKey}** has a due date of **${item.dueDate}**.`;
       } else {
-        assistantText = "I don't have a reviewed statutory answer for that yet — here's who can help:\n\nWe recommend speaking with a verified legal or accounting professional on the AI Business Passport marketplace.";
+        assistantText = "I don't have a reviewed statutory answer for that yet — here's who can help:\n\nWe recommend speaking with a verified legal or accounting professional on the Modus marketplace.";
       }
     }
 

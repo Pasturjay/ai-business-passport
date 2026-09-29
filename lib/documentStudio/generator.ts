@@ -103,7 +103,7 @@ export async function generateDocument(options: GenerateDocOptions): Promise<Gen
   const generatedSections: GeneratedDocSection[] = [];
   let totalTokens = 0;
 
-  const systemPrompt = `You are the Document Studio Engine for AI Business Passport in Nigeria.
+  const systemPrompt = `You are the Document Studio Engine for Modus Business Operating System in Nigeria.
 Your job is to generate a formal document section based ONLY on the provided Business Brain snapshot.
 
 STRICT GROUNDING POLICY:

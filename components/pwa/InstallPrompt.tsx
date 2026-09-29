@@ -47,9 +47,9 @@ export function InstallPrompt() {
       className="fixed bottom-4 left-4 right-4 md:left-auto md:right-4 md:w-96 bg-slate-900 text-white p-4 rounded-2xl shadow-xl z-50 border border-slate-800 flex items-center justify-between gap-4"
     >
       <div>
-        <h4 className="font-bold text-sm">Install AI Business Passport</h4>
+        <h4 className="font-bold text-sm">Install Modus Business OS</h4>
         <p className="text-xs text-slate-400 mt-0.5">
-          Access your Passport & Vault offline anytime.
+          Access your Modus Passport & Vault offline anytime.
         </p>
       </div>
       <div className="flex items-center gap-2">

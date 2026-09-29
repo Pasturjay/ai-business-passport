@@ -489,7 +489,7 @@ export const documentExportJob = inngest.createFunction(
         r2Key,
         sizeBytes: buffer.length,
         format: format || "pdf",
-        downloadUrl: `https://api.aibusinesspassport.ng/r2/${r2Key}`,
+        downloadUrl: `https://api.modus.ng/r2/${r2Key}`,
       };
     });
 

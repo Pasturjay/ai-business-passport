@@ -8,7 +8,7 @@ export async function GET() {
   }
 
   try {
-    throw new Error("AI Business Passport Dev Test Exception: Sentry is connected!");
+    throw new Error("Modus OS Dev Test Exception: Sentry is connected!");
   } catch (error) {
     const eventId = Sentry.captureException(error, {
       tags: {
