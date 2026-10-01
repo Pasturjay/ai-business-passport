@@ -96,7 +96,7 @@ npx tsc --noEmit
 # Run ESLint check
 npx next lint
 
-# Execute Vitest test suite (21 test files, 116 tests)
+# Execute Vitest test suite (22 test files, 122 tests)
 npx vitest run
 
 # Launch local dev environment
